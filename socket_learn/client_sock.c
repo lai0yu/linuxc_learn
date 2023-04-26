@@ -6,26 +6,41 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-int main(void){
-	int serv_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+#include <stdlib.h>
+int main(int argc, char* argv[]){
+	if (argc < 3) {
+		printf("Usage:%s <IP> <Port>\n",argv[0]);
+		return -1;
+	}
+	int serv_sock = socket(AF_INET, SOCK_STREAM,IPPROTO_IP);
 	struct sockaddr_in serv_sock_addr;
 
 	serv_sock_addr.sin_family = AF_INET;
-	serv_sock_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	serv_sock_addr.sin_port = htons(54321);
+	serv_sock_addr.sin_addr.s_addr = inet_addr(argv[1]);
+	serv_sock_addr.sin_port = htons(atoi(argv[2]));
 	int connect_ret =connect(serv_sock, (struct sockaddr*)&serv_sock_addr, sizeof(serv_sock_addr));
 	if(connect_ret < 0){
 		perror("connect error");
 		return -1;
 	}
 	printf("connect success");
-	char str[40]; 
-	read(serv_sock, str, sizeof(str));
-	printf("Message from server:%s\n",str);
+	char send_buf[40], recv_buf[40]; 
+	int send_ret =1,recv_ret = -1;
+	printf("now should send message to server, please input:\n");
 	while (1) {
-		bzero(str, sizeof(str));
-		scanf("%s",str);
-		send(serv_sock, str, strlen(str), 0);
+		bzero(send_buf, sizeof(send_buf));
+		scanf("%s",send_buf);
+		send_ret = send(serv_sock, send_buf, strlen(send_buf), 0);
+		if (send_ret >= 0) {
+			printf("send message:%s to server successfully!\n",send_buf);
+			printf("now wait server response...\n");
+			bzero(recv_buf, sizeof(recv_buf));
+			recv_ret = recv(serv_sock, recv_buf, sizeof(recv_buf),0);
+			if (recv_ret >=0) {
+				printf("has recv server response message:%s\n",recv_buf);
+				printf("now should send message to server, please input:\n");
+			}
+		}
 	}
 	return 0;
 }
