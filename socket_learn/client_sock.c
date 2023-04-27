@@ -7,6 +7,14 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
+void* recv_work(void *arg){
+	char buf[40];
+	while(1){
+
+		bzero(buf, sizeof(buf));
+		recv(*(int*)(arg), buf, sizeof(buf), 0);
+	}
+}
 int main(int argc, char* argv[]){
 	if (argc < 3) {
 		printf("Usage:%s <IP> <Port>\n",argv[0]);
