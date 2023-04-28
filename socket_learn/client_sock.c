@@ -1,3 +1,4 @@
+#include <pthread.h>
 #include <stdio.h>
 #include <strings.h>
 #include <unistd.h>
@@ -9,10 +10,21 @@
 #include <stdlib.h>
 void* recv_work(void *arg){
 	char buf[40];
+	int recv_ret = -1;
 	while(1){
-
 		bzero(buf, sizeof(buf));
-		recv(*(int*)(arg), buf, sizeof(buf), 0);
+		int recv_ret = recv(*(int*)(arg), buf, sizeof(buf), 0);
+		if (recv_ret > 0) {
+			printf("%s\n",buf);
+		}
+	}
+}
+void* send_work(void *arg){
+	char buf[40];
+	while (1) {
+		bzero(buf, sizeof(buf));
+		scanf("%s",buf);
+		send(*(int*)(arg), buf, sizeof(buf), 0);
 	}
 }
 int main(int argc, char* argv[]){
@@ -20,35 +32,22 @@ int main(int argc, char* argv[]){
 		printf("Usage:%s <IP> <Port>\n",argv[0]);
 		return -1;
 	}
-	int cli_sock = socket(AF_INET, SOCK_STREAM,IPPROTO_IP);
+	int self_sock = socket(AF_INET, SOCK_STREAM,IPPROTO_IP);
 
 	struct sockaddr_in serv_sock_addr;
 	serv_sock_addr.sin_family = AF_INET;
 	serv_sock_addr.sin_addr.s_addr = inet_addr(argv[1]);
 	serv_sock_addr.sin_port = htons(atoi(argv[2]));
-	int connect_ret =connect(cli_sock, (struct sockaddr*)&serv_sock_addr, sizeof(serv_sock_addr));
+	int connect_ret =connect(self_sock, (struct sockaddr*)&serv_sock_addr, sizeof(serv_sock_addr));
 	if(connect_ret < 0){
 		perror("connect error");
 		return -1;
 	}
-	printf("connect success");
-	char send_buf[40], recv_buf[40]; 
-	int send_ret =1,recv_ret = -1;
-	printf("now should send message to server, please input:\n");
-	while (1) {
-		bzero(send_buf, sizeof(send_buf));
-		scanf("%s",send_buf);
-		send_ret = send(cli_sock, send_buf, strlen(send_buf), 0);
-		if (send_ret >= 0) {
-			printf("send message:%s to server successfully!\n",send_buf);
-			printf("now wait server response...\n");
-			bzero(recv_buf, sizeof(recv_buf));
-			recv_ret = recv(cli_sock, recv_buf, sizeof(recv_buf),0);
-			if (recv_ret >=0) {
-				printf("has recv server response message:%s\n",recv_buf);
-				printf("now should send message to server, please input:\n");
-			}
-		}
-	}
+
+	pthread_t recv_thread;
+	pthread_create(&recv_thread, NULL, recv_work, &self_sock);
+	pthread_detach(recv_thread);
+
+	send_work(&self_sock);
 	return 0;
 }
