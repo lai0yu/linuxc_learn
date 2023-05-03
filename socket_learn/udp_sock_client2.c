@@ -7,25 +7,29 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-int main(int argc, char* argv[]){
-	if(argc < 4){
-		printf("Usage:%s <IP> <Self_Port> <Other_Port>\n",argv[0]);
+int main(int argc, char *argv[])
+{
+	if (argc < 4)
+	{
+		printf("Usage:%s <IP> <Self_Port> <Other_Port>\n", argv[0]);
 		return -1;
 	}
 	int sock = socket(AF_INET, SOCK_DGRAM, 0);
-	if (sock < 0) {
+	if (sock < 0)
+	{
 		perror("init sock error");
 		return -1;
-	}	
+	}
 
 	struct sockaddr_in self_addr;
 	self_addr.sin_family = AF_INET;
 	self_addr.sin_port = htons(atoi(argv[2]));
 	self_addr.sin_addr.s_addr = inet_addr(argv[1]);
 
-	int bind_ret = bind(sock, (struct sockaddr*)&self_addr, sizeof(self_addr));
+	int bind_ret = bind(sock, (struct sockaddr *)&self_addr, sizeof(self_addr));
 
-	if (bind_ret != 0) {
+	if (bind_ret != 0)
+	{
 		perror("bind failed");
 		return -1;
 	}
@@ -37,11 +41,12 @@ int main(int argc, char* argv[]){
 	other.sin_addr.s_addr = inet_addr(argv[1]);
 
 	char buf[50];
-	while (1) {
+	while (1)
+	{
 
 		bzero(buf, sizeof(buf));
-		scanf("%s",buf);
-		sendto(sock, buf, sizeof(buf), 0, (struct sockaddr*)&other, sizeof(other));
+		scanf("%s", buf);
+		sendto(sock, buf, sizeof(buf), 0, (struct sockaddr *)&other, sizeof(other));
 	}
 	return 0;
 }
