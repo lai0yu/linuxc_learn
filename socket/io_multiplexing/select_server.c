@@ -30,7 +30,6 @@ void *accept_work(void *arg) {
     client_addr_sizes[i] = sizeof(*client_addrs[i]);
     client_socks[i] = accept(serv_sock, (struct sockaddr *)client_addrs[i],
                              &client_addr_sizes[i]);
-
     if (client_socks[i] > 0) {
       printf("A new client %s:%d has connected!\n",
              inet_ntoa((*client_addrs[i]).sin_addr),
