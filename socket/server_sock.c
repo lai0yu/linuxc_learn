@@ -9,16 +9,8 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <arpa/inet.h>
-void* send_work(void* arg){
-	char buf[40];
-	while (1) {
-		bzero(buf, sizeof(buf));
-		scanf("%s",buf);
-		send(*(int*)arg, buf, sizeof(buf), 0);
-	}
-}
 void* recv_work(void* arg){
-	char buf[40];
+	char buf[512];
 	int recv_ret = -1;
 	while (1) {
 		bzero(buf, sizeof(buf));
@@ -45,17 +37,25 @@ int main(int argc, char* argv[]){
 		return -1;
 	}	
 
-	listen(serv_sock,40);
-	struct sockaddr_in cli_addr;
-	socklen_t cli_addr_len = sizeof(cli_addr);
-	int cli_sock = accept(serv_sock, (struct sockaddr*)&cli_addr,&cli_addr_len);
-	printf("Client %d has connected\n",cli_sock);
+	listen(serv_sock,512);
+	struct sockaddr_in client_addr;
+	socklen_t client_addr_len = sizeof(client_addr);
+	int client_sock = accept(serv_sock, (struct sockaddr*)&client_addr,&client_addr_len);
+	printf("Client %d has connected\n",client_sock);
 
 	pthread_t recv_thread;
-	pthread_create(&recv_thread, NULL, recv_work,&cli_sock);
+	pthread_create(&recv_thread, NULL, recv_work,&client_sock);
 	pthread_detach(recv_thread);
 
-	send_work(&cli_sock);
+	char buf[512];
+	while (1) {
+		bzero(buf, sizeof(buf));
+		scanf("%s",buf);
+		send(serv_sock, buf, strlen(buf), 0);
+	}
+	pthread_cancel(recv_thread);
+	close(serv_sock);
+	close(client_sock);
 	return 0;
 }
 
