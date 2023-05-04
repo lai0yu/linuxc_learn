@@ -8,9 +8,9 @@ int main(void){
 
 	char* argv[] = {"./new",NULL};
 
-	char* envp[] = {"AA","BB","CC","DD","NULL"};
+	char* envp[] = {"AA","BB","CC","DD",NULL};
 
-	int ret = execvpe("new",argv,envp);
+	int ret = execvpe("./new",argv,envp);
 	
 	printf("This line will not been print after exec\n");
 

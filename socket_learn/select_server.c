@@ -38,7 +38,7 @@ void* accept_work(void* arg){
 	return NULL;
 }
 void* send_work(void* arg){
-	char s[521];
+	char s[40];
 	int i;
 	while (1) {
 		bzero(s, sizeof(s));
@@ -87,40 +87,36 @@ int main(int argc, char* argv[]){
 				FD_SET(client_socks[i],&fdset);	
 			}
 		}		
-		select_ret = select(MAX_CONNECT+1, &fdset, NULL, NULL, &tv);
-		/*		if (select_ret < 0) {
-				perror("select failed");
-				return -1; 
-				}else if (select_ret == 0) {
-				printf("timeout\n");
-				continue;
-				}
-				*/
-		if (select_ret <=0) {
+		select_ret = select(MAX_CONNECT+1, &fdset, NULL, NULL, &tv);			
+		if (select_ret < 0) {
+			perror("select failed");
+			break;
+		}else if(select_ret == 0){
 			continue;
-		}
-		for(int i = 0; i < current_client_count; i++){
-			if(FD_ISSET(client_socks[i], &fdset)){
-				bzero(recv_buf, sizeof(recv_buf));
-				int recv_ret = recv(client_socks[i], recv_buf, sizeof(recv_buf), 0);
-				if (recv_ret > 0) {
-					printf("Message from client %s:%d==>%s\n",inet_ntoa(client_addrs[i]->sin_addr),ntohs(client_addrs[i]->sin_port),recv_buf);
-				}else if (recv_ret == -1) {
-					/*	pthread_mutex_lock(&mutex);
-						printf("Client %s:%d closed\n",inet_ntoa(client_addrs[i]->sin_addr),ntohs(client_addrs[i]->sin_port));
-						close(client_socks[i]);
-						FD_CLR(client_socks[i], &fdset);
-						for (j = i; j <current_client_count ; j++) {
-						client_addr_sizes[j] = client_addr_sizes[j+1];
-						client_addrs[j] = client_addrs[j+1];
-						client_socks[j] = client_socks[j+1];
-						}
-						current_client_count--;
-						i--;
-						pthread_mutex_unlock(&mutex);*/
+		}else{
+			for(int i = 0; i < current_client_count; i++){
+				if(FD_ISSET(client_socks[i], &fdset)){
+					bzero(recv_buf, sizeof(recv_buf));
+					int recv_ret = recv(client_socks[i], recv_buf, sizeof(recv_buf), 0);
+					if (recv_ret > 0) {
+						printf("Message from client %s:%d==>%s\n",inet_ntoa(client_addrs[i]->sin_addr),ntohs(client_addrs[i]->sin_port),recv_buf);
+					}
 				}
 			}
 		}
+	}
+	pthread_cancel(accept_thread);
+	pthread_cancel(send_thread);
+	close(serv_sock);
+	for(i = 0; i < MAX_CONNECT; i++){
+		if(client_addrs[i] != NULL){
+			free(client_addrs[i]);
+			client_addrs[i] = NULL;
+		}
+		if(client_socks >=0){
+			close(client_socks[i]);
+		}
+		client_addr_sizes[i] = 0;
 	}
 	return 0;
 }

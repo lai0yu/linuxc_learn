@@ -13,8 +13,8 @@ int main(){
 	}
 	int wstatus,ret;
 	ret = wait(&wstatus);
-	printf("被收尸的子进程是：%d\n",ret);
-	printf("被收尸的子进程死亡状态是:%d\n",wstatus);
+	printf("被回收的子进程是：%d\n",ret);
+	printf("被回收的子进程死亡状态是:%d\n",wstatus);
 
 	while(1){}
 

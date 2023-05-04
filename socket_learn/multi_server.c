@@ -33,7 +33,7 @@ int main(int argc, char* argv[]){
 		if(client_socks[clients_count] > 0){
 			clients_count++;
 		}
-		
+				
 	}
 
 	return 0;
