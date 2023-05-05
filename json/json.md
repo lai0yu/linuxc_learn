@@ -88,7 +88,7 @@ int main(void) {
 编译并运行  
 ![json_pack](https://pic2.imgdb.cn/item/6454f26c0d2dde57776fb03f.jpg)
 
-demo2 数组数据
+Demo2 数组数据
 
 ```c
 // array_json.c
