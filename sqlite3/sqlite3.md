@@ -27,8 +27,10 @@ sqlite>
 
 如果没有就去[sqlite下载页面](https://www.sqlite.org/download.html)源代码区下载 sqlite-autoconf-*.tar.gz
 
+或者直接[从代码仓库下载](https://github.com/lai0yu/linuxc_learn/tree/master/sqlite3)
+
 ```shell
-sudo tar xvzf sqlite-autoconf-3240000.tar.gz
+$ sudo tar xvzf sqlite-autoconf-3240000.tar.gz
 $ cd sqlite-autoconf-3240000
 $ sudo ./configure --prefix=/usr/local
 $ sudo make
