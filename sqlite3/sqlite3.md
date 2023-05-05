@@ -9,6 +9,10 @@ sqlite可以说是本地数据持久化应用最广泛的解决方案了,不同�
 * sqlite支持SQL92（SQL2）标准的大多数查询语言的功能
 * sqlite实现了事务性，而且是完全兼容ACID的，允许从多个进程或线程安全访问
 
+[toc]  
+***
+[代码仓库](https://github.com/lai0yu/linuxc_learn/tree/master/sqlite3)
+
 ## 安装
 
 有一些系统会自带sqlite，先看本地有没有已经安装好的, 如果出现以下类似的结果就说明已经有安装好的
@@ -24,14 +28,15 @@ sqlite>
 如果没有就去[sqlite下载页面](https://www.sqlite.org/download.html)源代码区下载 sqlite-autoconf-*.tar.gz
 
 ```shell
-$ sudo tar xvzf sqlite-autoconf-3071502.tar.gz
-$ cd sqlite-autoconf-3071502
+sudo tar xvzf sqlite-autoconf-3240000.tar.gz
+$ cd sqlite-autoconf-3240000
 $ sudo ./configure --prefix=/usr/local
 $ sudo make
 $ sudo make install
 ```
 
 ## 命令行使用
+
 ```shell
 sqlite3 #进入sqlite3
 .databases   #列出数据库文件名     ***
