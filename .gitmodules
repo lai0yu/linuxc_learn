@@ -1,0 +1,3 @@
+[submodule "cqq"]
+	path = cqq
+	url = git@github.com:lai0yu/cqq.git
