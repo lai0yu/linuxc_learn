@@ -3,6 +3,11 @@
     "unistd.h": "c",
     "socket.h": "c",
     "json.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "string.h": "c",
+    "sqlite_db.h": "c",
+    "array": "c",
+    "string": "c",
+    "string_view": "c"
   }
 }
