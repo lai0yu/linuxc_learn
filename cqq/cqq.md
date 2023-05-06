@@ -29,6 +29,10 @@ struct user_data{
 }
 ```
 
+函数原型 
+
+解包函数原型：`struct data unpack_json(char* json_str)`
+打包函数原型: `char* pack_json(void* data)`
 
 ## 客户端
 
