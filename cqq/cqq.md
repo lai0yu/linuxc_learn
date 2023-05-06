@@ -47,13 +47,39 @@ char* pack_json(void* data)
 
 ### 登录界面
 
-1. 界面函数原型：`void login_ui(void)`
-2. 登录功能函数原型：`int login(const char* username, const char* password)`
-3. 注册功能原型：`int register(const char* username, const char* password)`
-4. 退出功能：直接调用exit
+```c
+void login_ui(void)
+```
+
+#### 1. 登录功能
+
+```cc
+int login(const char* username, const char* password)
+```
+
+#### 3.注册功能
+
+```c
+int register(const char* username, const char* password)
+```
+   
+#### 4. 退出功能
+
+直接调用exit
+
 ### 主界面
 
-函数原型: `void main_ui(void)`
+```c
+void main_ui(void)
+```
 
+#### 1. 在线功能
+
+开一个线程定时发送心跳包，间隔时间为180s,客户端发送`ping` 接收`pong` 不使用通用格式数据
+发送`ping`后3s内没有接收到`pong`，断开服务器并退出
 
 ## 服务器
+
+#### 1.数据库
+
+
