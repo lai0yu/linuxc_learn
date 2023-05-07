@@ -6,9 +6,8 @@
     "stdio.h": "c",
     "string.h": "c",
     "sqlite_db.h": "c",
-    "linux_list.h": "c",
-    "array": "c",
-    "string": "c",
-    "string_view": "c"
-  }
+  },
+  "clangd.arguments": [],
+  "clang-format.style": "file",
+  "editor.defaultFormatter": "xaver.clang-format"
 }
