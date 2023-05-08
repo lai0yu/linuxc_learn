@@ -6,7 +6,9 @@
     "stdio.h": "c",
     "string.h": "c",
     "sqlite_db.h": "c",
-    "sqlite3.h": "c"
+    "sqlite3.h": "c",
+    "json_util.h": "c",
+    "types.h": "c"
   },
   "clangd.arguments": [],
   "clang-format.style": "file",
