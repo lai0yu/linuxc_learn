@@ -8,9 +8,19 @@
     "sqlite_db.h": "c",
     "sqlite3.h": "c",
     "json_util.h": "c",
-    "types.h": "c"
+    "types.h": "c",
+    "sqlite_util.h": "c"
   },
   "clangd.arguments": [],
   "clang-format.style": "file",
-  "editor.defaultFormatter": "xaver.clang-format"
+  "editor.defaultFormatter": "xaver.clang-format",
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "cqq_test_db",
+      "database": "cqq/server/test.db"
+    }
+  ],
+  "sqltools.useNodeRuntime": true
 }
