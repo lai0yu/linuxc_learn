@@ -9,7 +9,10 @@
     "sqlite3.h": "c",
     "json_util.h": "c",
     "types.h": "c",
-    "sqlite_util.h": "c"
+    "sqlite_util.h": "c",
+    "typeinfo": "c",
+    "limits": "c",
+    "type_traits": "c"
   },
   "clangd.arguments": [],
   "clang-format.style": "file",
