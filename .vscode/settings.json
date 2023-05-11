@@ -1,29 +1,26 @@
 {
-  "files.associations": {
-    "unistd.h": "c",
-    "socket.h": "c",
-    "json.h": "c",
-    "stdio.h": "c",
-    "string.h": "c",
-    "sqlite_db.h": "c",
-    "sqlite3.h": "c",
-    "json_util.h": "c",
-    "types.h": "c",
-    "sqlite_util.h": "c",
-    "typeinfo": "c",
-    "limits": "c",
-    "type_traits": "c"
-  },
-  "clangd.arguments": [],
-  "clang-format.style": "file",
-  "editor.defaultFormatter": "xaver.clang-format",
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "driver": "SQLite",
-      "name": "cqq_test_db",
-      "database": "cqq/server/test.db"
-    }
-  ],
-  "sqltools.useNodeRuntime": true
+    "files.associations": {
+        "account.h": "c",
+        "single_chat.h": "c",
+        "sqlite_util.h": "c",
+        "linux_list.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c"
+    },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "cqq/server/test.db",
+            "name": "cqq_server_test.db"
+        }
+    ],
+    "[c]": {
+        "editor.wordBasedSuggestions": false,
+        "editor.suggest.insertMode": "replace",
+        "editor.semanticHighlighting.enabled": true,
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "C_Cpp.clang_format_style": "file"
 }
