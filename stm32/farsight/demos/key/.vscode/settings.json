@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "drv_common_tim3.h": "c",
+        "stm32f10x.h": "c",
+        "drv_systick.h": "c",
+        "drv_tim3_it_breath.h": "c",
+        "math.h": "c",
+        "drv_dma.h": "c",
+        "drv_led.h": "c",
+        "drv_sysclk.h": "c"
+    }
+}
